@@ -3,9 +3,9 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
-.lib/Adafruit_MPR121-master/**
-.lib/DFplayer_Mini/**
-.lib/FastLED-master/**
-.lib/JQ8400_Serial-master/**
-.lib/MP3_J18400/**
+lib/Adafruit_MPR121-master/*
+lib/DFplayer_Mini/*
+lib/FastLED-master/*
+lib/JQ8400_Serial-master/*
+lib/MP3_J18400/*
 
