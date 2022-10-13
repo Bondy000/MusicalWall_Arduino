@@ -128,3 +128,30 @@ bool saS_playMode(){
 
     return false;
 }
+
+int getCurSong_Value(){
+    return curSong;
+}
+String getCurSong(){
+    return SongName[curSong];
+}
+
+bool saS_changeSong(int newSong){
+    if(newSong < 0 || newSong >= NumOfSongs){
+        Serial.println("Invalid Song");
+        return false;
+    }
+    if(curSong == newSong){
+        Serial.println("Already in song... Reset Song.");
+        resetSong();
+        return false;
+    }
+    Serial.print("Changing song from ");
+    Serial.print(SongName[curSong]);
+    Serial.print(" to song ");
+    curSong = static_cast<Available_Songs>(newSong);
+    Serial.println(SongName[curSong]);
+    Serial.println("");
+
+    return true;
+}

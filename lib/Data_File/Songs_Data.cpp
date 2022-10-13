@@ -4,7 +4,8 @@
 char const *SongName[NumOfSongs] = {
     "Little Jonathan", 
     "Purim", 
-    "Mother Dearest"
+    "Mother Dearest",
+    "No Song Chosen"
 };
 
 enum Available_Songs curSong = NoSong;

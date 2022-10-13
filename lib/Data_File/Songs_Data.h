@@ -1,7 +1,7 @@
 #ifndef SONGS_DATA_H
 #define SONGS_DATA_H
 
-enum Available_Songs {LittleJonathan, Purim, MotherDearest, NumOfSongs, NoSong};
+enum Available_Songs {LittleJonathan, Purim, MotherDearest, NoSong, NumOfSongs};
 extern char const *SongName[NumOfSongs];
 
 extern enum Available_Songs curSong;

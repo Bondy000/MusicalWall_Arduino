@@ -7,12 +7,12 @@ void resetSong(){
     curNote_Pointer = 0;
 }
 
-bool changeSong(enum Available_Songs song){
-    if((song == NoSong) || (song == NumOfSongs)){
+bool changeSong(int song){
+    if((song < 0) || (song >= NumOfSongs)){
         return false;
     }
     Serial.print("Change song to ");
-    curSong = song;
+    curSong = static_cast<Available_Songs>(song);
     Serial.println(SongName[curSong]);
     Serial.println("");
     switch (song)
@@ -30,7 +30,6 @@ bool changeSong(enum Available_Songs song){
         curSong = NoSong;
         curSongArray = NULL;
         return false;
-        break;
     }
     return true;
 }

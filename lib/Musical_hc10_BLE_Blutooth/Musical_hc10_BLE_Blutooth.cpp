@@ -30,11 +30,11 @@ String bl_read(){
 }
 
 
-String readData(String keyWord){
+String readData(){
     String r = bl_read();
     if(!isDataNull(r)){
-        if(r.compareTo(keyWord) == 0){
-            bl_write("Can Read");
+        if(r.compareTo(master_WantWrite) == 0){
+            bl_write(slave_CanRead);
             delay(500);
             Serial.println("Reading now... Waiting for input...");
             
@@ -42,6 +42,8 @@ String readData(String keyWord){
             while(reading){
                 r = bl_read();
                 if(!isDataNull(r)){
+                    bl_write(slave_GotData);
+                    delay(500);
                     Serial.println("End reading...");
                     return r;
                 }
@@ -52,15 +54,12 @@ String readData(String keyWord){
 }
 
 bool writeData(String data){
-    bl_write("Want Send");
+    bl_write(slave_WantWrite);
     String input = bl_read();
     if(!isDataNull(input)){
-        if(input.compareTo("Can Send") == 0){
+        if(input.compareTo(master_CanRead) == 0){
             Serial.println("Writing Data...");
-            while(bl_read().compareTo("Got Data") != 0){
-                bl_write(data);
-                delay(1000);
-            }
+            slaveMasterValidation(data);
             Serial.println("Finished Writing...");
             return true;
         }
@@ -73,4 +72,30 @@ bool isDataNull(String data){
         return false;
     }
     return true;
+} 
+
+void slaveMasterValidation(String data){
+    while(bl_read().compareTo(master_GotData) != 0){
+        bl_write(data);
+        delay(1000);
+    }
+}
+
+void testBlutooth(){
+    bool test = true;
+    while(1){
+        if(test){
+            String r =readData();
+            if(!isDataNull(r)){
+                Serial.println(r);
+                if(r.compareTo("Hello World") == 0){
+                    test = false;
+                }
+            }
+        }else{
+            if(writeData("Goodbye Life")){
+                test = true;
+            }
+        }
+    }
 }

@@ -8,6 +8,7 @@ enum Available_Instruments curInstrument_M = Guitar_Ins;
 /********************************/
 
 char const *ModeName[NumOfModes] = {"No Mode", "Stand Alone", "StandAlone PlaySong"};
+char const *InstrumentName[NumOfInstruments] = {"Guitar","Piano", "Saxophone", "Xylophone", "Drum", "Yokileyley"};
 
 int instrumentMaxNotes[NumOfInstruments] = {8, 8, 8, 8, 8, 8};
 

@@ -3,6 +3,6 @@
 #include "Songs_Data.h"
 
 void resetSong();
-bool changeSong(enum Available_Songs song);
+bool changeSong(int song);
 
 #endif

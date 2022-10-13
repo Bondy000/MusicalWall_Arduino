@@ -15,26 +15,33 @@ void setup() {
 
   Serial.println("Setup will take a few seconds...");
 
-  /*if(!mpr_Setup()){
+  #ifdef MPR
+  if(!mpr_Setup()){
     Serial.println("Error MPR");
     while(1);
   }
+  #endif
 
+  #ifdef MP3
   if(!mp3_Setup()){
     Serial.println("Error MP3");
     while(1);
-  }*/
-
+  }
+  #endif
   
-  /*if(!led_Setup()){
+  #ifdef LED
+  if(!led_Setup()){
     Serial.println("Error LED");
     while(1);
-  }*/
+  }
+  #endif
 
+  #ifdef BLUTOOTH
   if(!blutooth_Setup()){
     Serial.println("Error Blutooth");
     while(1);
   }
+  #endif
 
   delay(500);
 

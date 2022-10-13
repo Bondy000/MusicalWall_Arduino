@@ -3,12 +3,19 @@
 
 #include "CRGB_Color.h"
 
+//Define to test objects
+//#define MP3
+//#define MPR
+//#define LED
+#define BLUTOOTH
+
 
 enum Available_Modes{No_Mode, StandAlone, StandAlone_Song, NumOfModes};
-enum Available_Instruments{Guitar_Ins = 1, Piano_Ins, Saxophone_Ins, Xylophone_Ins, Drum_Ins, Yokileyley_Ins, NumOfInstruments};
+enum Available_Instruments{Guitar_Ins, Piano_Ins, Saxophone_Ins, Xylophone_Ins, Drum_Ins, Yokileyley_Ins, NumOfInstruments};
 
 
 extern char const *ModeName[NumOfModes];
+extern char const *InstrumentName[NumOfInstruments];
 #define SOFTWARE_SERIAL_SPEED 9600
 
 extern int instrumentMaxNotes[NumOfInstruments];
@@ -25,13 +32,13 @@ extern enum Available_Instruments curInstrument_M;
 /*************Start MP3 Data************/
 //TX of MP3 is connected to RX of the Arduino (RX_PIN)
 //RX of MP3 is connected to TX of the Arduino (TX_Pin) with 1k Ohm resistor between
-#define MP3_TX_TO_ARDUINO_RX_PIN 10
+#define MP3_TX_TO_ARDUINO_RX_PIN 10 //Default is 10
 #define MP3_RX_TO_ARDUINO__TX_PIN 11
 
 #define MIN_VOLUME 0
 #define MAX_VOLUME 30
 
-#define START_VOLUME 10
+#define START_VOLUME 15
 /*************End MP3 Data************/
 
 

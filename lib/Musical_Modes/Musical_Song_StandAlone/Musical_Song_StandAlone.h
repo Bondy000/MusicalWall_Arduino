@@ -27,5 +27,8 @@ void saS_flickerLedTimer(int ledToCheck);
 
 int saS_calculateKey(int note);
 
+String getCurSong();
+int getCurSong_Value();
 
+bool saS_changeSong(int newSong);
 #endif
