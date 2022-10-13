@@ -55,6 +55,7 @@ String readData(){
 
 bool writeData(String data){
     bl_write(slave_WantWrite);
+    delay(1000);
     String input = bl_read();
     if(!isDataNull(input)){
         if(input.compareTo(master_CanRead) == 0){
