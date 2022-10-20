@@ -14,7 +14,7 @@
 #include "Data_File.h"
 
 void musical_Program(){
-    testBlutooth();
+    //testBlutooth();
 
     bool changeModeToDefault = false;
     switch (curMode)
