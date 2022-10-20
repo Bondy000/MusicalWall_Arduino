@@ -6,7 +6,7 @@
 //Define to test objects
 #define MP3
 #define MPR
-//#define LED
+#define LED
 #define BLUTOOTH
 
 
