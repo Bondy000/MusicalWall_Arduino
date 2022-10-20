@@ -4,8 +4,8 @@
 #include "CRGB_Color.h"
 
 //Define to test objects
-//#define MP3
-//#define MPR
+#define MP3
+#define MPR
 //#define LED
 #define BLUTOOTH
 
@@ -65,7 +65,7 @@ enum mprMode{Touch, Release, other};
 /*************End Blutooth_hc06 Data************/
 
 /*************Start LED Data************/
-#define LED_DATA_PIN_M 12
+#define LED_DATA_PIN_M 13
 #define LED_TYPE_M    WS2811 
 #define COLOR_ORDER_M GRB
 
