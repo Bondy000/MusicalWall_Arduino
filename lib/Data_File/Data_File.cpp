@@ -1,7 +1,7 @@
 #include "Data_File.h"
 
 /*****Start Mode for program*****/
-enum Available_Modes curMode = StandAlone;
+enum Available_Modes curMode = StandAlone_Song;
 /********************************/
 /*************Current Instrument************/
 enum Available_Instruments curInstrument_M = Saxophone_Ins;
@@ -19,7 +19,7 @@ int instrumentPhysicalInput[NumOfInstruments] = {8, 8, 4, 8, 5, 8};
 int *led_Position_input[NumOfInstruments] = {
     (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Guitar_Ins
     (int[]){6, 8, 11, 13, 15, 18, 20, 22},  //Piano_Ins
-    (int[]){6, 8, 10, 12},                  //Saxophone_Ins
+    (int[]){16, 15, 13, 12},                  //Saxophone_Ins
     (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Xylophone_Ins
     (int[]){6, 8, 10, 12, 15},              //Drum_Ins
     (int[]){5, 7, 9, 12, 14, 17, 19, 21}    //Yokileyley_Ins
@@ -39,7 +39,7 @@ long *led_Color_Input[NumOfInstruments] = {
 int *led_Input_width[NumOfInstruments] = {
     (int[]){2, 2, 2, 2, 2, 2, 2, 2},    //Guitar_Ins
     (int[]){2, 2, 1, 2, 2, 1, 1, 2},    //Piano_Ins
-    (int[]){2, 2, 2, 2},                //Saxophone_Ins
+    (int[]){1, 1, 2, 2},                //Saxophone_Ins
     (int[]){2, 2, 2, 2, 2, 2, 2, 2},    //Xylophone_Ins
     (int[]){2, 2, 2, 2, 2},             //Drum_Ins
     (int[]){2, 2, 2, 2, 2, 2, 2, 2}     //Yokileyley_Ins

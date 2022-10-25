@@ -9,7 +9,7 @@ char const *SongName[NumOfSongs] = {
 };
 
 enum Available_Songs curSong = LittleJonathan;
-int* curSongArray = NULL;
+int* curSongArray = littleJonathan_Song;
 int curNote_Pointer = 0;
 
 //A song is ending in a negetive number

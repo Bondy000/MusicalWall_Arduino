@@ -15,7 +15,7 @@ int saS_calculateKey(int note){
     Serial.println("Note to play: " + note);
     #endif
 
-    int physicalNotes = instrumentPhysicalInput[curInstrument_M - 1];
+    int physicalNotes = instrumentPhysicalInput[curInstrument_M];
     int playKey = note / physicalNotes;
     playKey = playKey * physicalNotes;
     playKey = note - playKey;
@@ -95,7 +95,7 @@ bool saS_playMode(){
     }
 
     playKey = saS_calculateKey(curSongArray[curNote_Pointer]);
-    
+
     if(saS_isSongDone()){
         Serial.println("Song is done, thank you for playing!");
         delay(500);
@@ -119,12 +119,13 @@ bool saS_playMode(){
     saS_flickerLedTimer(playKey);
 
     if(nextNote){
-        curNote_Pointer++;
-        mp3_PlayNote(playKey);
+        mp3_PlayNote(curSongArray[curNote_Pointer]);
+        delay(500); 
         saS_resetTimer();
         led_ClearAllLed();
-
-        delay(500); 
+       
+        curNote_Pointer++;
+        nextNote = false;
     }
 
     return false;

@@ -76,6 +76,7 @@ bool mp3_PlayInstrumentNote(int insturment, int note){
     //The folders starts from 1
     myDFPlayer.playFolder(insturment + 1, note);
     delay(500);
+    
     return true;
 }
 
