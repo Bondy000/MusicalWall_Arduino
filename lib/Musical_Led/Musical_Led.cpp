@@ -79,7 +79,7 @@ void led_LightInput(int input){
     }
 
     int numLed = led_Input_width[curInstrument_M][input - 1];
-    for (int i = 0; i < numLed - 1; i++)
+    for (int i = 0; i < numLed; i++)
     {
         int ledPos = led_Position_input[curInstrument_M][input - 1] + i;
         CRGB ledColorM = led_Color_Input[curInstrument_M][input - 1];
@@ -88,7 +88,7 @@ void led_LightInput(int input){
     
 }
 void led_ClearInput(int input){
-    if(input < 1 || input > instrumentPhysicalInput[curInstrument_M - 1]){
+    if(input < 1 || input > instrumentPhysicalInput[curInstrument_M]){
         return;
     }
     if(leds[led_Position_input[curInstrument_M][input - 1]] != CRGB(0,0,0)){

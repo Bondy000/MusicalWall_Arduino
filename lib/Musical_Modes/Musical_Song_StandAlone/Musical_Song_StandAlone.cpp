@@ -39,14 +39,14 @@ void saS_resetTimer(){
 }
 
 void saS_flickerLedTimer(int ledToCheck){
-    int flicker_time = 0;
+    int flicker_time = 1;
     if(saS_Timer < TIMER_MAX_MS * (30/100)){
         flicker_time = FLICKER_TIMER_MS / 4;    
     }
     else if(saS_Timer < TIMER_MAX_MS * (70/100)){
         flicker_time = FLICKER_TIMER_MS / 2;
     }
-    else if(saS_Timer < TIMER_MAX_MS * (9/100)){
+    else if(saS_Timer < TIMER_MAX_MS * (90/100)){
         flicker_time = FLICKER_TIMER_MS;
     }
     else{
@@ -54,7 +54,7 @@ void saS_flickerLedTimer(int ledToCheck){
 
         led_LightInput(ledToCheck);
     }
-
+    
     if(saS_Timer % flicker_time == 0){
         if(led_CheckInputOn(ledToCheck)){
             led_ClearInput(ledToCheck);
@@ -122,6 +122,7 @@ bool saS_playMode(){
         curNote_Pointer++;
         mp3_PlayNote(playKey);
         saS_resetTimer();
+        led_ClearAllLed();
 
         delay(500); 
     }

@@ -8,7 +8,7 @@ char const *SongName[NumOfSongs] = {
     "No Song Chosen"
 };
 
-enum Available_Songs curSong = NoSong;
+enum Available_Songs curSong = LittleJonathan;
 int* curSongArray = NULL;
 int curNote_Pointer = 0;
 

@@ -4,7 +4,7 @@
 enum Available_Modes curMode = StandAlone;
 /********************************/
 /*************Current Instrument************/
-enum Available_Instruments curInstrument_M = Guitar_Ins;
+enum Available_Instruments curInstrument_M = Saxophone_Ins;
 /********************************/
 
 char const *ModeName[NumOfModes] = {"No Mode", "Stand Alone", "StandAlone PlaySong"};
@@ -17,8 +17,8 @@ int instrumentPhysicalInput[NumOfInstruments] = {8, 8, 4, 8, 5, 8};
 
 //Set the positions of the leds based on Inputs (Positions in the led array\strip)
 int *led_Position_input[NumOfInstruments] = {
-    (int[]){6, 8, 10, 13, 15, 18, 20, 22},  //Guitar_Ins
-    (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Piano_Ins
+    (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Guitar_Ins
+    (int[]){6, 8, 11, 13, 15, 18, 20, 22},  //Piano_Ins
     (int[]){6, 8, 10, 12},                  //Saxophone_Ins
     (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Xylophone_Ins
     (int[]){6, 8, 10, 12, 15},              //Drum_Ins
@@ -38,7 +38,7 @@ long *led_Color_Input[NumOfInstruments] = {
 //The width of the 'Button' with LEDS
 int *led_Input_width[NumOfInstruments] = {
     (int[]){2, 2, 2, 2, 2, 2, 2, 2},    //Guitar_Ins
-    (int[]){2, 2, 2, 2, 2, 2, 2, 2},    //Piano_Ins
+    (int[]){2, 2, 1, 2, 2, 1, 1, 2},    //Piano_Ins
     (int[]){2, 2, 2, 2},                //Saxophone_Ins
     (int[]){2, 2, 2, 2, 2, 2, 2, 2},    //Xylophone_Ins
     (int[]){2, 2, 2, 2, 2},             //Drum_Ins
