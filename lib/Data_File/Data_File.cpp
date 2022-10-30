@@ -1,10 +1,10 @@
 #include "Data_File.h"
 
 /*****Start Mode for program*****/
-enum Available_Modes curMode = StandAlone_Song;
+enum Available_Modes curMode = StandAlone;
 /********************************/
 /*************Current Instrument************/
-enum Available_Instruments curInstrument_M = Saxophone_Ins;
+enum Available_Instruments curInstrument_M = Guitar_Ins;
 /********************************/
 
 char const *ModeName[NumOfModes] = {"No Mode", "Stand Alone", "StandAlone PlaySong"};

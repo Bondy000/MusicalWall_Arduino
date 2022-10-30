@@ -24,6 +24,7 @@ char const *SongName[NumOfSongs] = {
 
 enum Available_Songs curSong = NoSong;
 int* curSongArray = NULL;
+
 int curNote_Pointer = 0;
 
 //A song is ending in a negetive number
