@@ -6,7 +6,6 @@
 #include "Musical_MPR_Sensor.h"
 
 #include "Songs_Data.h"
-#include "Songs_Function.h"
 
 #include "Data_File.h"
 
@@ -31,4 +30,5 @@ String getCurSong();
 int getCurSong_Value();
 
 bool saS_changeSong(int newSong);
+void saS_changeSongArray(int song);
 #endif

@@ -10,7 +10,7 @@ enum Available_Instruments curInstrument_M = Saxophone_Ins;
 char const *ModeName[NumOfModes] = {"No Mode", "Stand Alone", "StandAlone PlaySong"};
 char const *InstrumentName[NumOfInstruments] = {"Guitar","Piano", "Saxophone", "Xylophone", "Drum", "Yokileyley"};
 
-int instrumentMaxNotes[NumOfInstruments] = {8, 8, 8, 8, 8, 8};
+int instrumentMaxNotes[NumOfInstruments] = {20, 20, 13, 13, 7, 13};
 
 /*************Start LED Data************/
 int instrumentPhysicalInput[NumOfInstruments] = {8, 8, 4, 8, 5, 8};
@@ -19,7 +19,7 @@ int instrumentPhysicalInput[NumOfInstruments] = {8, 8, 4, 8, 5, 8};
 int *led_Position_input[NumOfInstruments] = {
     (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Guitar_Ins
     (int[]){6, 8, 11, 13, 15, 18, 20, 22},  //Piano_Ins
-    (int[]){16, 15, 13, 12},                  //Saxophone_Ins
+    (int[]){16, 15, 13, 12},                //Saxophone_Ins
     (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Xylophone_Ins
     (int[]){6, 8, 10, 12, 15},              //Drum_Ins
     (int[]){5, 7, 9, 12, 14, 17, 19, 21}    //Yokileyley_Ins

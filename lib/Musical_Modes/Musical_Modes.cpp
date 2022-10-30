@@ -10,7 +10,6 @@
 #include "Musical_hc10_BLE_Blutooth.h"
 
 #include "Songs_Data.h"
-#include "Songs_Function.h"
 #include "Data_File.h"
 
 void musical_Program(){
@@ -137,10 +136,10 @@ bool writeFunction(String code){
     case 'S':
     case 's':
         if(value == 0){
-            resetSong();
+            saS_resetSong();
             return true;
         }else{
-            return changeSong(value - 1);
+            return saS_changeSong(value - 1);
         }
     default:
         Serial.println("Invalid Function...");

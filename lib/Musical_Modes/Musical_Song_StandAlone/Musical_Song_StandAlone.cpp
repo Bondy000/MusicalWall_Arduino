@@ -93,31 +93,34 @@ bool saS_playMode(){
         
         return true;
     }
+    if(curSongArray[curNote_Pointer] != 0){
+        playKey = saS_calculateKey(curSongArray[curNote_Pointer]);
 
-    playKey = saS_calculateKey(curSongArray[curNote_Pointer]);
+        if(saS_isSongDone()){
+            Serial.println("Song is done, thank you for playing!");
+            delay(500);
 
-    if(saS_isSongDone()){
-        Serial.println("Song is done, thank you for playing!");
-        delay(500);
+            led_ClearAllLed();
+            return true;
+        }
 
-        led_ClearAllLed();
-        return true;
-    }
-
-    if(saS_isTimerDone()){
-        nextNote = true;
-    }
-    else{
-        pressedKey = mpr_CheckTouch();
-
-        if(pressedKey == playKey){
+        if(saS_isTimerDone()){
             nextNote = true;
         }
+        else{
+            pressedKey = mpr_CheckTouch();
+
+            if(pressedKey == playKey){
+                nextNote = true;
+            }
+        }
+
+        saS_playTTimer();
+        saS_flickerLedTimer(playKey);
+    }else{
+        delay(WAIT_NOTE);
+        nextNote = true;
     }
-
-    saS_playTTimer();
-    saS_flickerLedTimer(playKey);
-
     if(nextNote){
         mp3_PlayNote(curSongArray[curNote_Pointer]);
         delay(500); 
@@ -145,7 +148,7 @@ bool saS_changeSong(int newSong){
     }
     if(curSong == newSong){
         Serial.println("Already in song... Reset Song.");
-        resetSong();
+        saS_resetSong();
         return false;
     }
     Serial.print("Changing song from ");
@@ -155,5 +158,67 @@ bool saS_changeSong(int newSong){
     Serial.println(SongName[curSong]);
     Serial.println("");
 
+    saS_changeSongArray(curSong);
+
     return true;
+}
+
+void saS_changeSongArray(int song){
+    switch (song)
+    {
+    case LittleJonathan:
+        curSongArray = littleJonathan_Song;
+        break;
+    case MotherDearest:
+        curSongArray = motherDearest_Song;
+        break;
+    case HowAsongWasBorn:
+        curSongArray = HowAsongWasBorn_song;
+        break;
+    case ClosedKinderGarden:
+        curSongArray = ClosedKinderGarden_song;
+        break;
+    case handsUp:
+        curSongArray = handsUp_song;
+        break;
+    case ImStayingMe:
+        curSongArray = ImStayingMe_song;
+        break;
+    case Mycandle:
+        curSongArray = Mycandle_song;
+        break;
+    case Longbeard:
+        curSongArray = Longbeard_song;
+        break;
+    case GoingTotheShoka:
+        curSongArray = GoingTotheShoka_song;
+        break;
+    case IHaveHunokka:
+        curSongArray = IHaveHunokka_song;
+        break;
+    case HappyBday:
+        curSongArray = HappyBday_song;
+        break;
+    case AcheerfullBand:
+        curSongArray = AcheerfullBand_song;
+        break;
+    case MordecaiWentBeforTheKing:
+        curSongArray = MordecaiWentBeforTheKing_song;
+        break;
+    case ILoveChocolate:
+        curSongArray = ILoveChocolate_song;
+        break;
+    case HammerAndNail:
+        curSongArray = HammerAndNail_song;
+        break;
+    case AlotOfHappiness:
+        curSongArray = AlotOfHappiness_song;
+        break;
+    case MostBeutifulGirl:
+        curSongArray = MostBeutifulGirl_song;
+        break;
+    default:
+    curSongArray = NULL;
+        break;
+    }
 }
