@@ -42,16 +42,12 @@ bool mode_ChangeMode(Available_Mode newMode){
         Serial.println("Already in the mode!");
         return false;
     }
-    String toPrint = "Changing mode from ";
-    toPrint = toPrint + getName();
-    toPrint = toPrint + " to mode ";
-    toPrint = toPrint + getName();
-    /*Serial.print("Changing mode from ");
-    Serial.print(ModeName[curMode]);
-    Serial.print(" to mode ");*/
+
+    Serial.print("Changing mode from ");
+    Serial.print(getName());
+    Serial.print(" to mode ");
     changeMode(newMode);
-    //curMode = newMode;
-    //Serial.println(ModeName[curMode]);
-    Serial.println(toPrint);
+
+    Serial.println(getName());
     return true;
 }

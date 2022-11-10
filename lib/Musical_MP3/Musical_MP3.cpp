@@ -51,7 +51,7 @@ bool mp3_PlayInstrumentNote(uint8_t playInst, uint8_t note){
     Serial.print(note);
     Serial.print(" from instrument ");
     Serial.println((playInst + 1));
-    //The folders starts from 1
+    //The folders of the instruments starts from 1
     myDFPlayer.playFolder(playInst + 1, note);
     delay(500);
     

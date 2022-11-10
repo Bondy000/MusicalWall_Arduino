@@ -15,24 +15,19 @@ bool led_Setup(){
     delay(1000); // 3 second delay for recovery
 
     uint8_t num = getLedNum();
-    //leds = (CRGB*)malloc(num * sizeof(CRGB));
-    
-    //if(leds != NULL){
-        // tell FastLED about the LED strip configuration
-        FastLED.addLeds<LED_TYPE_M,LED_DATA_PIN_M,COLOR_ORDER_M>(leds, num).setCorrection(TypicalLEDStrip);
 
-        // set master brightness control
-        FastLED.setBrightness(LED_BRIGHTNESS_M);
+    FastLED.addLeds<LED_TYPE_M,LED_DATA_PIN_M,COLOR_ORDER_M>(leds, num).setCorrection(TypicalLEDStrip);
 
-        led_Play_Pattern(led_Rainbow_Pattern);
+    // set master brightness control
+    FastLED.setBrightness(LED_BRIGHTNESS_M);
 
-        Serial.println("Led setup success");
-        delay(1500);
-        led_ClearAllLed();
+    led_Play_Pattern(led_Rainbow_Pattern);
 
-        return true;
-    //}
-    //return false;
+    Serial.println("Led setup success");
+    delay(1500);
+    led_ClearAllLed();
+
+    return true;
 }
 
 void led_Rainbow_Pattern(){
