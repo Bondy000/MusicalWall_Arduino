@@ -12,6 +12,7 @@
 #define LED
 #define BLUTOOTH
 
+//Define the instrument to play
 #define GUITAR_INS
 
 enum Available_Mode{No_Mode, StandAlone, StandAlone_Song, NumOfModes};
