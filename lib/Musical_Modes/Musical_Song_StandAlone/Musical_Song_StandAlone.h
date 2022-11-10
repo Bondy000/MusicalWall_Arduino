@@ -1,16 +1,12 @@
 #ifndef MUSICAL_SONG_STANDALONE_H 
 #define MUSICAL_SONG_STANDALONE_H 
 
-#include "Musical_Led.h"
-#include "Musical_MP3.h"
-#include "Musical_MPR_Sensor.h"
-
-#include "Songs_Data.h"
-
 #include "Data_File.h"
+#include "Song_File.h"
 
 #define TIMER_MAX_MS 10000
 #define FLICKER_TIMER_MS 1000
+#define WAIT_NOTE 5000
 
 bool saS_playMode();
 
@@ -24,11 +20,11 @@ bool saS_isTimerDone();
 
 void saS_flickerLedTimer(int ledToCheck);
 
-int saS_calculateKey(int note);
+uint8_t saS_calculateKey(uint8_t note);
 
-String getCurSong();
-int getCurSong_Value();
+//String getCurSong();
+//int getCurSong_Value();
 
-bool saS_changeSong(int newSong);
-void saS_changeSongArray(int song);
+bool saS_changeSong(enum Available_Song newSong);
+//void saS_changeSongArray(int song);
 #endif

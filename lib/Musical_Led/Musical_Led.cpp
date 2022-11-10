@@ -4,7 +4,8 @@
 FASTLED_USING_NAMESPACE
 
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
-CRGB leds[LED_ARRAY_NUM_M];
+//CRGB *leds;
+CRGB leds[60];
 
 int timer = 0;
 int flick_timer = 0;
@@ -12,25 +13,32 @@ int flick_timer = 0;
 bool led_Setup(){
     Serial.println("Start Led Setup");
     delay(1000); // 3 second delay for recovery
-  
-    // tell FastLED about the LED strip configuration
-    FastLED.addLeds<LED_TYPE_M,LED_DATA_PIN_M,COLOR_ORDER_M>(leds, LED_ARRAY_NUM_M).setCorrection(TypicalLEDStrip);
 
-    // set master brightness control
-    FastLED.setBrightness(LED_BRIGHTNESS_M);
-
-    led_Play_Pattern(led_Rainbow_Pattern);
-
-    Serial.println("Led setup success");
-    delay(1500);
-    led_ClearAllLed();
+    uint8_t num = getLedNum();
+    //leds = (CRGB*)malloc(num * sizeof(CRGB));
     
-    return true;
+    //if(leds != NULL){
+        // tell FastLED about the LED strip configuration
+        FastLED.addLeds<LED_TYPE_M,LED_DATA_PIN_M,COLOR_ORDER_M>(leds, num).setCorrection(TypicalLEDStrip);
+
+        // set master brightness control
+        FastLED.setBrightness(LED_BRIGHTNESS_M);
+
+        led_Play_Pattern(led_Rainbow_Pattern);
+
+        Serial.println("Led setup success");
+        delay(1500);
+        led_ClearAllLed();
+
+        return true;
+    //}
+    //return false;
 }
 
 void led_Rainbow_Pattern(){
     // FastLED's built-in rainbow generator
-    fill_rainbow( leds, LED_ARRAY_NUM_M, gHue, 7);
+    uint8_t num = getLedNum();
+    fill_rainbow( leds, num, gHue, 7);
 }
 void led_Play_Pattern(void (*pattern)()){
     int delayTime_milis = 10000;
@@ -49,13 +57,14 @@ void led_Play_Pattern(void (*pattern)()){
   led_ClearAllLed();  
 }
 
-void led_LightLed(int ledPos, CRGB color){
-    if(ledPos >= 0 && ledPos < LED_ARRAY_NUM_M){
+void led_LightLed(uint8_t ledPos, CRGB color){
+    uint8_t num = getLedNum();
+    if(ledPos >= 0 && ledPos < num){
         leds[ledPos] = color;
     }
     FastLED.show();
 }
-void led_ClearLed(int ledPos){
+void led_ClearLed(uint8_t ledPos){
     led_LightLed(ledPos, CRGB(0,0,0));
 }
 void led_ClearAllLed(){
@@ -65,48 +74,60 @@ void led_ClearAllLed(){
 
 //Input can be 1 upto the current instrument inputs
 //If 8 inputs -> 1 to 8 is valid
-void led_LightInput(int input){
+void led_LightInput(uint8_t input){
     if(input < 1){
         return;
     }
-    if (input > instrumentPhysicalInput[curInstrument_M])
+    if (input > getPhyInput())
     {
         return;
     }
 
-    if(leds[led_Position_input[curInstrument_M][input - 1]] != CRGB(0,0,0)){
+    if(leds[getLedPos(input - 1)] != CRGB(0,0,0)){
         return;
     }
 
-    int numLed = led_Input_width[curInstrument_M][input - 1];
-    for (int i = 0; i < numLed; i++)
+    uint8_t numLed = getLedWidth(input-1);
+    for (size_t i = 0; i < numLed; i++)
     {
-        int ledPos = led_Position_input[curInstrument_M][input - 1] + i;
-        CRGB ledColorM = led_Color_Input[curInstrument_M][input - 1];
+        uint8_t ledPos = getLedPos(input-1) + i;
+        CRGB ledColorM = getLedColor(input-1);
         led_LightLed(ledPos, ledColorM);
     }
     
 }
-void led_ClearInput(int input){
-    if(input < 1 || input > instrumentPhysicalInput[curInstrument_M]){
+void led_ClearInput(uint8_t input){
+    if(input < 1 || input > getPhyInput()){
         return;
     }
-    if(leds[led_Position_input[curInstrument_M][input - 1]] != CRGB(0,0,0)){
+    if(leds[getLedPos(input - 1)] != CRGB(0,0,0)){
         return;
     }
 
-    int numLed = led_Input_width[curInstrument_M][input- 1];
+    int numLed = getLedWidth(input - 1);
     for (int i = 0; i < numLed - 1; i++)
     {
-        int ledPos = led_Position_input[curInstrument_M][input - 1] + i;
+        uint8_t ledPos = getLedPos(input-1) + i;
         CRGB ledColor = CRGB(0, 0, 0);
         led_LightLed(ledPos, ledColor);
     }
 }
 
-bool led_CheckInputOn(int input){
-    if(leds[led_Position_input[curInstrument_M][input - 1]] != CRGB(0,0,0)){
+bool led_CheckInputOn(uint8_t input){
+    if(leds[getLedPos(input - 1)] != CRGB(0,0,0)){
         return true;
     }
     return false;
+}
+
+void led_LightAll(CRGB color, float miliSec){
+    uint8_t num = getLedNum();
+    for (size_t i = 0; i < num; i++)
+    {
+        leds[i] = color;
+    }
+    FastLED.show();
+    
+    delay(miliSec);
+    led_ClearAllLed();
 }

@@ -1,34 +1,40 @@
 #include "Musical_Song_StandAlone.h"
 
+#include "Musical_Led.h"
+#include "Musical_MP3.h"
+#include "Musical_MPR_Sensor.h"
+
 int saS_Timer = TIMER_MAX_MS;
 
+uint8_t* songPointer = NULL;
+
 bool saS_isSongDone(){
-    int curNote = curSongArray[curNote_Pointer];
-    if(curNote < 0){
-        return true;
+    if(songPointer != NULL){
+        uint8_t curNote = *songPointer;
+        if(curNote == 0xff){
+            return true;
+        }
     }
     return false;
+
+    /*int curNote = curSongArray[curNote_Pointer];
+    if(curNote == 0xff){
+        return true;
+    }
+    return false;*/
 }
 
-int saS_calculateKey(int note){
-    #ifdef DEBUG
-    Serial.println("Note to play: " + note);
-    #endif
-
-    int physicalNotes = instrumentPhysicalInput[curInstrument_M];
+uint8_t saS_calculateKey(uint8_t note){
+    int physicalNotes = getPhyInput();// instrumentPhysicalInput[curInstrument_M];
     int playKey = note / physicalNotes;
     playKey = playKey * physicalNotes;
     playKey = note - playKey;
-
-    #ifdef DEBUG
-    Serial.println("Key to press: " + playKey);
-    #endif
 
     return playKey;
 }
 
 bool saS_isSongChosen(){
-    if(curSong == NoSong){
+    if(getCurSong() == NoSong){
         return false;
     }
     return true;
@@ -78,7 +84,7 @@ bool saS_isTimerDone(){
 }
 
 void saS_resetSong(){
-    curNote_Pointer = 0;
+    songPointer = NULL;
     saS_resetTimer();
 }
 
@@ -93,8 +99,8 @@ bool saS_playMode(){
         
         return true;
     }
-    if(curSongArray[curNote_Pointer] != 0){
-        playKey = saS_calculateKey(curSongArray[curNote_Pointer]);
+    if((*songPointer) != 0){
+        playKey = saS_calculateKey(*songPointer);
 
         if(saS_isSongDone()){
             Serial.println("Song is done, thank you for playing!");
@@ -122,48 +128,61 @@ bool saS_playMode(){
         nextNote = true;
     }
     if(nextNote){
-        mp3_PlayNote(curSongArray[curNote_Pointer]);
+        mp3_PlayNote(playKey);
         delay(500); 
         saS_resetTimer();
         led_ClearAllLed();
        
-        curNote_Pointer++;
+        songPointer++;
         nextNote = false;
     }
 
     return false;
 }
 
-int getCurSong_Value(){
+/*int getCurSong_Value(){
     return curSong;
-}
-String getCurSong(){
+}*/
+/*String getCurSong(){
     return SongName[curSong];
-}
+}*/
 
-bool saS_changeSong(int newSong){
+bool saS_changeSong(enum Available_Song newSong){
     if(newSong < 0 || newSong >= NumOfSongs){
-        Serial.println("Invalid Song");
+        //Serial.println("Invalid Song");
         return false;
     }
-    if(curSong == newSong){
-        Serial.println("Already in song... Reset Song.");
+    if(newSong == NoSong){
+        //Serial.println("Reset song...");
         saS_resetSong();
         return false;
     }
-    Serial.print("Changing song from ");
-    Serial.print(SongName[curSong]);
-    Serial.print(" to song ");
-    curSong = static_cast<Available_Songs>(newSong);
-    Serial.println(SongName[curSong]);
-    Serial.println("");
+    Available_Song curSong = getCurSong();
+    if(curSong == (newSong - 1)){
+        //Serial.println("Already in song...");
+        return false;
+    }
+    
+    String toPrint = "Changing song from ";
+    toPrint = toPrint + getSongName(curSong);
+    toPrint = toPrint + " to song ";
+    toPrint = toPrint + (newSong);
+    Serial.println(toPrint);
+    //Serial.print("Changing song from ");
+    //Serial.print(SongName[curSong]);
+    //Serial.print(" to song ");
+    changeSong(newSong);
+    //curSong = static_cast<Available_Songs>(newSong - 1);
+    //Serial.println(SongName[curSong]);
 
-    saS_changeSongArray(curSong);
-
+    //curSongArray = Songs[curSong];
+    //saS_changeSongArray(curSong);
+    songPointer = getSongArray(getCurSong());
     return true;
 }
 
-void saS_changeSongArray(int song){
+/*void saS_changeSongArray(int song){
+    curSongArray = Songs[song];
     switch (song)
     {
     case LittleJonathan:
@@ -218,7 +237,7 @@ void saS_changeSongArray(int song){
         curSongArray = MostBeutifulGirl_song;
         break;
     default:
-    curSongArray = NULL;
+    curSongArray = nullptr;
         break;
     }
-}
+}*/

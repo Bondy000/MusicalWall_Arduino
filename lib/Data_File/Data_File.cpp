@@ -1,48 +1,73 @@
 #include "Data_File.h"
+#include "Song_File.h"
 
-/*****Start Mode for program*****/
-enum Available_Modes curMode = StandAlone;
-/********************************/
-/*************Current Instrument************/
-enum Available_Instruments curInstrument_M = Guitar_Ins;
-/********************************/
+#ifdef GUITAR_INS
+#include "instrumentData/Guitar_Data.h"
+const Available_Instruments curInstrument = Guitar_Ins;
+#endif
+#ifdef PIANO_INS
+#include "instrumentData/Piano_Data.h"
+const Available_Instruments curInstrument = Piano_Ins;
+#endif
+#ifdef SAXOPHONE_INS
+#include "instrumentData/Saxophone_Data.h"
+const Available_Instruments curInstrument = Saxophone_Ins;
+#endif
+#ifdef XYLOPHONE_INS
+#include "instrumentData/Xylophone_Data.h"
+const Available_Instruments curInstrument = Xylophone_Ins;
+#endif
+#ifdef DRUM_INS
+#include "instrumentData/Drum_Data.h"
+const Available_Instruments curInstrument = Drum_Ins;
+#endif
+#ifdef YOKILEYLEY_INS
+#include "instrumentData/Yokileyley_Data.h"
+const Available_Instruments curInstrument = Yokileyley_Ins;
+#endif
 
-char const *ModeName[NumOfModes] = {"No Mode", "Stand Alone", "StandAlone PlaySong"};
-char const *InstrumentName[NumOfInstruments] = {"Guitar","Piano", "Saxophone", "Xylophone", "Drum", "Yokileyley"};
 
-int instrumentMaxNotes[NumOfInstruments] = {20, 20, 13, 13, 7, 13};
+String modeName[NumOfModes] = {"No Mode", "Stand Alone", "Stand Alone Play Song"};
 
-/*************Start LED Data************/
-int instrumentPhysicalInput[NumOfInstruments] = {8, 8, 4, 8, 5, 8};
+String getName(){
+    return instrumentData.name;
+}
+String getModeName(enum Available_Mode mode){
+    return modeName[mode];
+}
+enum Available_Instruments getCurInstrument(){
+    return curInstrument;
+}
+enum Available_Mode getCurMode(){
+    return instrumentData.mode;
+}
+enum Available_Song getCurSong(){
+    return instrumentData.song;
+}
 
-//Set the positions of the leds based on Inputs (Positions in the led array\strip)
-int *led_Position_input[NumOfInstruments] = {
-    (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Guitar_Ins
-    (int[]){6, 8, 11, 13, 15, 18, 20, 22},  //Piano_Ins
-    (int[]){16, 15, 13, 12},                //Saxophone_Ins
-    (int[]){6, 8, 10, 12, 15, 18, 20, 22},  //Xylophone_Ins
-    (int[]){6, 8, 10, 12, 15},              //Drum_Ins
-    (int[]){5, 7, 9, 12, 14, 17, 19, 21}    //Yokileyley_Ins
-};
+uint8_t getLedPos(uint8_t input){
+    return instrumentData.led_PosInput[input];
+}
+uint32_t getLedColor(uint8_t input){
+    return instrumentData.led_ColInput[input];
+}
+uint8_t getLedWidth(uint8_t input){
+    return instrumentData.led_WidthInput[input];
+}
 
-//Set the colors for each led
-long *led_Color_Input[NumOfInstruments] = {
-    (long[]){Red, Blue, Pink, Purple, Yellow, Green, Brown ,Orange},    //Guitar_Ins
-    (long[]){Red, Blue, Pink, Purple, Yellow, Green, Brown ,Orange},    //Piano_Ins
-    (long[]){Red, Blue, Pink, Purple},                                  //Saxophone_Ins
-    (long[]){Red, Blue, Pink, Purple, Yellow, Green, Brown ,Orange},    //Xylophone_Ins
-    (long[]){Red, Blue, Pink, Purple, Yellow},                          //Drum_Ins
-    (long[]){Red, Blue, Pink, Purple, Yellow, Green, Brown ,Orange}     //Yokileyley_Ins
-};
+void changeMode(enum Available_Mode mode){
+    instrumentData.mode = mode;
+}
+void changeSong(enum Available_Song song){
+    instrumentData.song = song;
+}
 
-//The width of the 'Button' with LEDS
-int *led_Input_width[NumOfInstruments] = {
-    (int[]){2, 2, 2, 2, 2, 2, 2, 2},    //Guitar_Ins
-    (int[]){2, 2, 1, 2, 2, 1, 1, 2},    //Piano_Ins
-    (int[]){1, 1, 2, 2},                //Saxophone_Ins
-    (int[]){2, 2, 2, 2, 2, 2, 2, 2},    //Xylophone_Ins
-    (int[]){2, 2, 2, 2, 2},             //Drum_Ins
-    (int[]){2, 2, 2, 2, 2, 2, 2, 2}     //Yokileyley_Ins
-};
-
-/*************End LED Data************/
+uint8_t getLedNum(){
+    return instrumentData.led_Num;
+}
+uint8_t getMaxNote(){
+    return instrumentData.maxNote;
+}
+uint8_t getPhyInput(){
+    return instrumentData.phyInput;
+}

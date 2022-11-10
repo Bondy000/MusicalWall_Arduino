@@ -1,13 +1,12 @@
 #include "Musical_MP3.h"
-#include "Data_File.h"
-
 #include "DFRobotDFPlayerMini.h"
+
 //TX of MP3 is connected to RX of the Arduino (RX_PIN)
 //RX of MP3 is connected to TX of the Arduino (TX_Pin) with 1k Ohm resistor between
 SoftwareSerial mp3SoftwareSerial(MP3_TX_TO_ARDUINO_RX_PIN, MP3_RX_TO_ARDUINO__TX_PIN);
 DFRobotDFPlayerMini myDFPlayer;
 
-int curVol = START_VOLUME;
+uint8_t curVol = START_VOLUME;
 
 bool mp3_Setup(){
     mp3SoftwareSerial.begin(SOFTWARE_SERIAL_SPEED);
@@ -29,60 +28,47 @@ bool mp3_Setup(){
   return true;
 }
 
-bool mp3_ChangeVolume_ByValue(int volume){
+bool mp3_ChangeVolume_ByValue(uint8_t volume){
     if(volume < MIN_VOLUME || volume > MAX_VOLUME){
-      mp3_volumeRangeError();
         return false;
     }
     curVol = volume;
     myDFPlayer.volume(curVol);
     return true;
 }
-bool mp3_changeVolume_Up(){
+void mp3_changeVolume_Up(){
     myDFPlayer.volumeUp();
-    return mp3_changeVolume_Check();
 }
-bool mp3_changeVolume_Down(){
+void mp3_changeVolume_Down(){
     myDFPlayer.volumeDown();
-    return mp3_changeVolume_Check();
 }
 
-bool mp3_changeVolume_Check(){
-  int vol = myDFPlayer.readVolume();
-  if(vol != curVol){
-    curVol = vol;
-    Serial.println("MP3 volume change successful!");
-    return true;
-  }
-  Serial.println("MP3 volume didn't change");
-  mp3_volumeRangeError();
-  return false;
+bool mp3_PlayNote(uint8_t note){
+    return mp3_PlayInstrumentNote(getCurInstrument(), note);
 }
-
-void mp3_volumeRangeError(){
-  int maxVol = MAX_VOLUME;
-  int minVol = MIN_VOLUME;
-  Serial.println(String("Volume exceeded max value of ") + maxVol + " or min value of " + minVol);
-}
-
-bool mp3_PlayNote(int note){
-    return mp3_PlayInstrumentNote(curInstrument_M, note);
-}
-bool mp3_PlayInstrumentNote(int insturment, int note){
+bool mp3_PlayInstrumentNote(uint8_t playInst, uint8_t note){
     Serial.print("Playing note ");
     Serial.print(note);
     Serial.print(" from instrument ");
-    Serial.println(insturment);
+    Serial.println((playInst + 1));
     //The folders starts from 1
-    myDFPlayer.playFolder(insturment + 1, note);
+    myDFPlayer.playFolder(playInst + 1, note);
     delay(500);
     
+    return true;
+}
+
+bool mp3_PlaySong(uint8_t song){
+    Serial.print("Playing song ");
+    Serial.print(song);
+
+    myDFPlayer.playFolder(0, song);
     return true;
 }
 
 void mp3_stopPlaying(){
     myDFPlayer.stop();
 }
-int mp3_getCurrentVolume(){
+uint8_t mp3_getCurrentVolume(){
     return curVol;
 }

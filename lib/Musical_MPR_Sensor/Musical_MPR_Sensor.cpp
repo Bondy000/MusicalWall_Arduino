@@ -2,7 +2,6 @@
 #include <Wire.h>
 #include "Adafruit_MPR121.h"
 #include "Musical_MPR_Sensor.h"
-#include "Data_File.h"
 
 Adafruit_MPR121 cap = Adafruit_MPR121();
 uint16_t lasttouched = 0;
@@ -24,10 +23,10 @@ bool mpr_Setup(){
 Checking the mpr inputs and returning the elctorde that is being touched
 0 = No touch
 */
-int mpr_CheckTouch(){
+uint8_t mpr_CheckTouch(){
     currtouched = cap.touched();
   
-    int electrode = 0;
+    uint8_t electrode = 0;
 
     if(currtouched != 0 && currtouched != lasttouched){
         for (uint8_t i = 0; i < MPR_ELECTRODE; i++)

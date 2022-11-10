@@ -1,27 +1,14 @@
 #ifndef MUSICAL_MODE_H 
 #define MUSICAL_MODE_H 
-#include "Data_File.h"
-#include "Songs_Data.h"
+#include <Arduino.h>
 
-const Available_Modes defaultMode = StandAlone;
+#include "Data_File.h"
+
+//#include "Musical_hc10_BLE_Blutooth.h"
+
+const Available_Mode defaultMode = StandAlone;
 
 void musical_Program();
 
-bool changeMode(int newMode);
-
-String getInstrumentName(int inst_value);
-int getInstrumentValue(String inst_Name);
-
-bool decipherCode(String code);
-bool readFunction(String code);
-bool writeFunction(String code);
-int getNumericValue(String code);
-
-String getCurModeName();
-String getModeName(int value);
-String getCurSongName();
-String getSongName(int value);
-String getCurInstrumentName();
-String getInstrumentName(int value);
-
+bool mode_ChangeMode(Available_Mode newMode);
 #endif

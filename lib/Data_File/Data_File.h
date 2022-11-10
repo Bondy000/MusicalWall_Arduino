@@ -1,6 +1,9 @@
 #ifndef DATA_FILE_H 
-#define DATA_FILE_H
+#define DATA_FILE_H 
 
+#include <Arduino.h>
+#include <stdint.h>
+#include "Song_File.h"
 #include "CRGB_Color.h"
 
 //Define to test objects
@@ -9,24 +12,25 @@
 #define LED
 #define BLUTOOTH
 
+#define GUITAR_INS
 
-enum Available_Modes{No_Mode, StandAlone, StandAlone_Song, NumOfModes};
+enum Available_Mode{No_Mode, StandAlone, StandAlone_Song, NumOfModes};
 enum Available_Instruments{Guitar_Ins, Piano_Ins, Saxophone_Ins, Xylophone_Ins, Drum_Ins, Yokileyley_Ins, NumOfInstruments};
 
-
-extern char const *ModeName[NumOfModes];
-extern char const *InstrumentName[NumOfInstruments];
 #define SOFTWARE_SERIAL_SPEED 9600
 
-extern int instrumentMaxNotes[NumOfInstruments];
-
-/*****Start Mode for program*****/
-extern enum Available_Modes curMode;
-/********************************/
-
-/*************Current Instrument************/
-extern enum Available_Instruments curInstrument_M;
-/*******************************************/
+struct instrument
+{
+    String name;
+    uint8_t maxNote;
+    uint8_t phyInput;
+    uint8_t led_Num;
+    uint8_t led_PosInput[8];
+    uint32_t led_ColInput[8];
+    uint8_t led_WidthInput[8];
+    enum Available_Mode mode;
+    enum Available_Song song;
+};
 
 
 /*************Start MP3 Data************/
@@ -61,7 +65,6 @@ enum mprMode{Touch, Release, other};
 #define BLUTOOTH_TX_TO_ARDUINO_RX_PIN 2
 #define BLUTOOTH_RX_TO_ARDUINO__TX_PIN 3
 
-
 /*************End Blutooth_hc06 Data************/
 
 /*************Start LED Data************/
@@ -72,19 +75,23 @@ enum mprMode{Touch, Release, other};
 #define LED_BRIGHTNESS_M          96
 #define LED_FRAMES_PER_SECOND_M  120
 
-#define LED_ARRAY_NUM_M    30
-
-extern int instrumentPhysicalInput[NumOfInstruments];
-
-//Set the positions of the leds based on Inputs (Positions in the led array\strip)
-extern int *led_Position_input[NumOfInstruments];
-
-//Set the colors for each led
-extern long *led_Color_Input[NumOfInstruments];
-
-//The width of the 'Button' with LEDS
-extern int *led_Input_width[NumOfInstruments];
-
 /*************End LED Data************/
+
+String getName();
+String getModeName(enum Available_Mode mode);
+enum Available_Instruments getCurInstrument();
+enum Available_Mode getCurMode();
+enum Available_Song getCurSong();
+
+uint8_t getLedPos(uint8_t input);
+uint32_t getLedColor(uint8_t input);
+uint8_t getLedWidth(uint8_t input);
+
+void changeMode(enum Available_Mode mode);
+void changeSong(enum Available_Song song);
+
+uint8_t getLedNum();
+uint8_t getMaxNote();
+uint8_t getPhyInput();
 
 #endif
