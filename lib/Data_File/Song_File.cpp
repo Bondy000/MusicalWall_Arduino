@@ -2,19 +2,19 @@
 
 String SongName[NumOfSongs] = {
     "Little Jonathan", 
-    "Mother Dearest",
+    //"Mother Dearest",
     "How A Song Was Born",
-    "Closed Kindergarden",
+    //"Closed Kindergarden",
     "hands Up",
-    "Im Staying Me",
-    "My Candle",
+    //"Im Staying Me",
+    //"My Candle",
     "Long Beard",
     "Going To The Shoka",
     "I Have Hunokka",
     "Happy Birthday",
     "A Cheerfull Band",
-    "Mordecai Went Before The King",
-    "Most Beautiful Girl",
+    //"Mordecai Went Before The King",
+    //"Most Beautiful Girl",
     "I Love Chocolate",
     "Hammer And Nail",
     "Alot Of Happiness",
@@ -104,18 +104,18 @@ uint8_t* getSongArray(enum Available_Song song){
     {
     case LittleJonathan:
         return littleJonathan_Song;
-    case MotherDearest:
-        return motherDearest_Song;
+    //case MotherDearest:
+    //   return motherDearest_Song;
     case HowAsongWasBorn:
         return HowAsongWasBorn_song;
-    case ClosedKinderGarden:
-        return ClosedKinderGarden_song;
+    //case ClosedKinderGarden:
+    //    return ClosedKinderGarden_song;
     case handsUp:
         return handsUp_song;
-    case ImStayingMe:
-        return ImStayingMe_song;
-    case Mycandle:
-        return Mycandle_song;
+    //case ImStayingMe:
+    //    return ImStayingMe_song;
+    //case Mycandle:
+    //    return Mycandle_song;
     case Longbeard:
         return Longbeard_song;
     case GoingTotheShoka:
@@ -126,16 +126,16 @@ uint8_t* getSongArray(enum Available_Song song){
         return HappyBday_song;
     case AcheerfullBand:
         return AcheerfullBand_song;
-    /*case MordecaiWentBeforTheKing:
-        return MordecaiWentBeforTheKing_song;
+    //case MordecaiWentBeforTheKing:
+    //    return MordecaiWentBeforTheKing_song;
     case ILoveChocolate:
         return ILoveChocolate_song;
     case HammerAndNail:
         return HammerAndNail_song;
     case AlotOfHappiness:
         return AlotOfHappiness_song;
-    case MostBeutifulGirl:
-        return MostBeutifulGirl_song;*/
+    //case MostBeutifulGirl:
+    //    return MostBeutifulGirl_song;
     default:
         return NULL;
     }
@@ -146,18 +146,18 @@ String getSongName(enum Available_Song song){
     {
     case LittleJonathan:
         return SongName[LittleJonathan];
-    case MotherDearest:
-        return SongName[MotherDearest];
+    //case MotherDearest:
+    //    return SongName[MotherDearest];
     case HowAsongWasBorn:
         return SongName[HowAsongWasBorn];
-    case ClosedKinderGarden:
-        return SongName[ClosedKinderGarden];
+    //case ClosedKinderGarden:
+    //    return SongName[ClosedKinderGarden];
     case handsUp:
         return SongName[handsUp];
-    case ImStayingMe:
-        return SongName[ImStayingMe];
-    case Mycandle:
-        return SongName[Mycandle];
+    //case ImStayingMe:
+    //    return SongName[ImStayingMe];
+    //case Mycandle:
+    //    return SongName[Mycandle];
     case Longbeard:
         return SongName[Longbeard];
     case GoingTotheShoka:
@@ -168,16 +168,16 @@ String getSongName(enum Available_Song song){
         return SongName[HappyBday];
     case AcheerfullBand:
         return SongName[AcheerfullBand];
-    case MordecaiWentBeforTheKing:
-        return SongName[MordecaiWentBeforTheKing];
+    //case MordecaiWentBeforTheKing:
+    //    return SongName[MordecaiWentBeforTheKing];
     case ILoveChocolate:
         return SongName[ILoveChocolate];
     case HammerAndNail:
         return SongName[HammerAndNail];
     case AlotOfHappiness:
         return SongName[AlotOfHappiness];
-    case MostBeutifulGirl:
-        return SongName[MostBeutifulGirl];
+    //case MostBeutifulGirl:
+    //    return SongName[MostBeutifulGirl];
     default:
         return "";
     }

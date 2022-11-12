@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <Arduino.h>
 
+bool isDataValid();
+void setNullPointer();
 uint8_t decipherHofman();
 void setDataPointer(uint8_t* data);
 uint8_t addMask(uint8_t currentValue);

@@ -3,13 +3,22 @@
 #define DEFUALT_MASK 0x1
 
 uint8_t mask = DEFUALT_MASK;
-uint8_t *dec = nullptr;
+uint8_t *dec = NULL;
+
+bool isDataValid(){
+    if(dec == NULL){
+        return false;
+    }
+    return true;
+}
 
 void setDataPointer(uint8_t* data){
     dec = data;
     mask = DEFUALT_MASK;
 }
-
+void setNullPointer(){
+    dec = NULL;
+}
 /*
     0 =     1101        0xd
     1 =     011         0x3 

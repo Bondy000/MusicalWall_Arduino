@@ -10,15 +10,15 @@
 
 bool saS_playMode();
 
-bool saS_isSongDone();
-bool saS_isSongChosen();
-void saS_resetSong();
+//bool saS_isSongDone();
+//bool saS_isSongChosen();
+//void saS_resetSong();
 
-void saS_resetTimer();
-void saS_playTTimer();
-bool saS_isTimerDone();
+//void saS_resetTimer();
+//void saS_playTTimer();
+//bool saS_isTimerDone();
 
-void saS_flickerLedTimer(int ledToCheck);
+//void saS_flickerLedTimer(int ledToCheck);
 
 uint8_t saS_calculateKey(uint8_t note);
 
@@ -27,4 +27,9 @@ uint8_t saS_calculateKey(uint8_t note);
 
 bool saS_changeSong(enum Available_Song newSong);
 //void saS_changeSongArray(int song);
+
+bool saS_isTimerFinished();
+void saS_setTimer(int value);
+void saS_playTimer();
+void saS_resetSong();
 #endif

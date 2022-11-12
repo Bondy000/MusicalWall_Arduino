@@ -3,12 +3,17 @@
 #include "Musical_Led.h"
 #include "Musical_MP3.h"
 #include "Musical_MPR_Sensor.h"
+#include "hofmanCode.h"
+#include "Song_File.h"
 
-int saS_Timer = TIMER_MAX_MS;
+int saS_Timer = 0;
+bool missedKey = false;
+bool isZeroDelay = false;
 
-uint8_t* songPointer = NULL;
+bool playSong = true;
+//uint8_t* songPointer = NULL;
 
-bool saS_isSongDone(){
+/*bool saS_isSongDone(){
     if(songPointer != NULL){
         uint8_t curNote = *songPointer;
         if(curNote == 0xff){
@@ -17,15 +22,15 @@ bool saS_isSongDone(){
     }
     return false;
 
-    /*int curNote = curSongArray[curNote_Pointer];
-    if(curNote == 0xff){
-        return true;
-    }
-    return false;*/
-}
+    //int curNote = curSongArray[curNote_Pointer];
+    //if(curNote == 0xff){
+    //    return true;
+    //}
+    //return false;
+}*/
 
 uint8_t saS_calculateKey(uint8_t note){
-    int physicalNotes = getPhyInput();// instrumentPhysicalInput[curInstrument_M];
+    int physicalNotes = getPhyInput();
     int playKey = note / physicalNotes;
     playKey = playKey * physicalNotes;
     playKey = note - playKey;
@@ -33,7 +38,7 @@ uint8_t saS_calculateKey(uint8_t note){
     return playKey;
 }
 
-bool saS_isSongChosen(){
+/*bool saS_isSongChosen(){
     if(getCurSong() == NoSong){
         return false;
     }
@@ -69,9 +74,9 @@ void saS_flickerLedTimer(int ledToCheck){
             led_LightInput(ledToCheck);
         }
     }
-}
+}*/
 
-void saS_playTTimer(){
+/*void saS_playTTimer(){
     saS_Timer--;
     delay(1);
 }
@@ -86,19 +91,77 @@ bool saS_isTimerDone(){
 void saS_resetSong(){
     songPointer = NULL;
     saS_resetTimer();
-}
+}*/
 
 bool saS_playMode(){
-    int pressedKey = 0;
-    int playKey = 0;
-    bool nextNote = false;
+    //int pressedKey = 0;
+    //int playKey = 0;
+    //bool playedNote = true;
+    uint8_t noteToPlay = 0;
+    uint8_t pressedInput = 0;
 
-    if(!saS_isSongChosen()){
+    if(!isDataValid()){
         Serial.println("No song was chosen, please choose a song!");
         delay(1000);
         
         return true;
     }
+
+    if(playSong){    
+        mp3_PlaySong((uint8_t)getCurSong());
+        delay(3000);
+        playSong = false;
+    }
+
+    if(saS_isTimerFinished()){
+        if(missedKey){
+            mp3_PlayNote(noteToPlay);
+            delay(1500);
+        }
+
+        led_ClearAllLed();
+        noteToPlay = saS_calculateKey(decipherHofman());
+        saS_setTimer(TIMER_MAX_MS);
+
+        missedKey = false;
+        isZeroDelay = false;
+    }
+    
+    if(noteToPlay){
+        if(noteToPlay == 0xff){
+            Serial.println("Song is done, thank you for playing!");
+            delay(1500);
+
+            saS_resetSong();
+
+            led_ClearAllLed();
+            return true;
+        }
+        else{
+            missedKey = true;
+            led_LightInput(noteToPlay);
+            
+            pressedInput = mpr_CheckTouch();
+            if(pressedInput == noteToPlay){
+                mp3_PlayNote(noteToPlay);
+                delay(1000);
+
+                saS_setTimer(0);
+                missedKey = false;
+            }
+        }
+    } else{
+        if(!isZeroDelay){
+            saS_setTimer(WAIT_NOTE);
+            isZeroDelay = true;
+        }
+    }
+
+    saS_playTimer();
+    return false;
+
+    ////
+    /*
     if((*songPointer) != 0){
         playKey = saS_calculateKey(*songPointer);
 
@@ -137,7 +200,25 @@ bool saS_playMode(){
         nextNote = false;
     }
 
+    return false;*/
+}
+
+void saS_resetSong(){
+    setDataPointer(getSongArray(getCurSong()));
+    saS_setTimer(0);
+}
+bool saS_isTimerFinished(){
+    if(saS_Timer <= 0){
+        return true;
+    }
     return false;
+}
+void saS_setTimer(int value){
+    saS_Timer = value;
+}
+void saS_playTimer(){
+    delay(1);
+    saS_Timer--;
 }
 
 /*int getCurSong_Value(){
@@ -148,96 +229,30 @@ bool saS_playMode(){
 }*/
 
 bool saS_changeSong(enum Available_Song newSong){
-    if(newSong < 0 || newSong >= NumOfSongs){
+    if(newSong < 0 || newSong > NumOfSongs){
         //Serial.println("Invalid Song");
         return false;
     }
-    if(newSong == NoSong){
-        //Serial.println("Reset song...");
+
+    //Reset Song if getting the NumberOfSongs
+    if(newSong == NumOfSongs){
         saS_resetSong();
-        return false;
+        return true;
     }
+
     Available_Song curSong = getCurSong();
-    if(curSong == (newSong - 1)){
-        //Serial.println("Already in song...");
+    //Changing to the same song does nothing
+    if(newSong == curSong){
         return false;
     }
     
-    String toPrint = "Changing song from ";
-    toPrint = toPrint + getSongName(curSong);
-    toPrint = toPrint + " to song ";
-    toPrint = toPrint + (newSong);
-    Serial.println(toPrint);
-    //Serial.print("Changing song from ");
-    //Serial.print(SongName[curSong]);
-    //Serial.print(" to song ");
+    Serial.print("Changing song from ");
+    Serial.print(getSongName(curSong));
+    Serial.print(" to song ");
     changeSong(newSong);
-    //curSong = static_cast<Available_Songs>(newSong - 1);
-    //Serial.println(SongName[curSong]);
+    Serial.println(getSongName(curSong));
+    
+    setDataPointer(getSongArray(getCurSong()));
 
-    //curSongArray = Songs[curSong];
-    //saS_changeSongArray(curSong);
-    songPointer = getSongArray(getCurSong());
     return true;
 }
-
-/*void saS_changeSongArray(int song){
-    curSongArray = Songs[song];
-    switch (song)
-    {
-    case LittleJonathan:
-        curSongArray = littleJonathan_Song;
-        break;
-    case MotherDearest:
-        curSongArray = motherDearest_Song;
-        break;
-    case HowAsongWasBorn:
-        curSongArray = HowAsongWasBorn_song;
-        break;
-    case ClosedKinderGarden:
-        curSongArray = ClosedKinderGarden_song;
-        break;
-    case handsUp:
-        curSongArray = handsUp_song;
-        break;
-    case ImStayingMe:
-        curSongArray = ImStayingMe_song;
-        break;
-    case Mycandle:
-        curSongArray = Mycandle_song;
-        break;
-    case Longbeard:
-        curSongArray = Longbeard_song;
-        break;
-    case GoingTotheShoka:
-        curSongArray = GoingTotheShoka_song;
-        break;
-    case IHaveHunokka:
-        curSongArray = IHaveHunokka_song;
-        break;
-    case HappyBday:
-        curSongArray = HappyBday_song;
-        break;
-    case AcheerfullBand:
-        curSongArray = AcheerfullBand_song;
-        break;
-    case MordecaiWentBeforTheKing:
-        curSongArray = MordecaiWentBeforTheKing_song;
-        break;
-    case ILoveChocolate:
-        curSongArray = ILoveChocolate_song;
-        break;
-    case HammerAndNail:
-        curSongArray = HammerAndNail_song;
-        break;
-    case AlotOfHappiness:
-        curSongArray = AlotOfHappiness_song;
-        break;
-    case MostBeutifulGirl:
-        curSongArray = MostBeutifulGirl_song;
-        break;
-    default:
-    curSongArray = nullptr;
-        break;
-    }
-}*/
