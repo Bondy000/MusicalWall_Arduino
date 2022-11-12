@@ -55,9 +55,9 @@ bool read_BleData(){
     
     uint8_t value = (bleData[6] << 4) | bleData[7];
     
-    /*if(bleData[4] == ble_Read){
+    if(bleData[4] == ble_Read){
         return sendData(bleData[5], value);
-    }else */if(bleData[4] == ble_Write){
+    }else if(bleData[4] == ble_Write){
         return readData(bleData[5], value);
     }
     return false;

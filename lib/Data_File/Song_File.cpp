@@ -22,88 +22,82 @@ String SongName[NumOfSongs] = {
 };
 
 
-uint8_t littleJonathan_Song[] = {   5, 3, 3, 4, 2,    // יונתן הקטן 1
-                                2, 1, 2, 3, 4, 
-                                5, 5, 5,
-                                5, 3, 3, 4, 2, 2,
-                                1, 3, 5, 5, 1,
-                                0xff};
-uint8_t motherDearest_Song[]={ 2 ,4 ,3 ,4 ,3 ,2 ,4 ,5 ,6 ,0 , 2 ,4 ,3 ,4 ,   //2  אמא יקרה לי
-                           3 ,2 ,4 ,5 ,6 ,0 ,6 ,6 ,6 ,4 ,5 ,5 ,5 ,0 ,
-                           4 ,4 ,4 ,2 ,3 ,3 ,3 ,6 ,4 ,3 ,2, 6, 4, 3, 2,
-                           0xff};
-uint8_t HowAsongWasBorn_song[] ={   3, 10, 3, 5,0 ,4,         // 3 איך שיר נולד
-                                6, 5,0  ,5, 5, 3, 10 , 3 ,5,
-                                4, 5, 4 ,3, 4 ,6, 5,0 , 5  ,                               
-                                3, 10, 3, 5,0 , 4,        
-                                6, 5,0 , 5, 5, 5, 5, 6, 5,
-                                6, 8,0xff
-                             };
-/*uint8_t ClosedKinderGarden_song[] ={9, 3, 3, 3, 3,0  ,3, 11, 3, 11,   //4 גן סגור 
-                                3, 11, 3,0  , 9,
-                                3, 3, 3, 3, 3, 3, 3, 11,3,
-                                11, 3, 11, 3,0  , 3, 3, 3,0 , 3,3,3 ,11,9,
-                                19, 20, 19,
-                                0xff
-                               };
-uint8_t handsUp_song[]={ 3 , 5, 3, 3, 5, 3, 8, 7,      //5 יידים למעלה
-                      6 , 5,0  ,4 ,2, 4, 6, 5, 5,
-                      5, 4, 3, 2, 1,
-                      0xff
-                    };
-uint8_t ImStayingMe_song[]= { 2 , 2, 5, 5, 11, 11, 3, 0 ,3, 2,  //6 אני נשאר אני 
-                         2, 3, 20, 3, 2,0 , 2, 2, 5, 5, 11,
-                         3,0 , 3, 2, 2, 3, 20, 3, 2,0 , 2, 2,
-                         7 ,7 ,6 ,6 ,5 ,2 ,2 ,8 ,7 ,6 ,0 ,2 ,2 ,
-                         6 ,6 ,5 ,5 ,11,2,7,6,5,0 ,0  ,
-                         5 ,6 ,7 ,8 ,2 ,2 ,8 ,7 ,6 ,7,
-                         0xff
-                         };
-uint8_t Mycandle_song[]= {3 ,4 ,5 ,6 ,5 ,3 ,4 ,3 ,2 ,4 ,3 ,0  ,         // 7 נר לי דקיק 
-                      3, 4, 5, 6, 5, 3, 4, 3, 2, 1,0 , 3, 
-                      6, 7, 8, 8, 7, 7, 6,0 , 5, 5, 6, 5, 3, 4, 3, 2, 1,
-                      0xff};
-uint8_t Longbeard_song[]={1,4,3,2,1,2,3, 4 ,1,0 ,1 ,4 ,3 ,2 ,1 ,2 ,3 , 4 ,1,0 ,  // 8 זקן ארוך לי עד ברכיים
-                      1 ,4 ,4 , 5,4 , 5, 6 ,8 ,6,4 ,5 ,5,5 ,6, 5, 4, 8 ,8,
-                      0xff};
-uint8_t GoingTotheShoka_song[]= {1 ,4 ,5 ,4 ,4 ,3 ,0 ,1 ,1 ,3 ,3 ,2 ,4 ,3 ,2 ,1 ,0 ,          //9 אצא לי השוקה
-                             1, 19, 1, 3, 7, 7, 7, 6, 7, 8,0 , 8, 7, 6, 5, 3, 7, 6, 6, 5,
-                            0xff};
-uint8_t IHaveHunokka_song[] = {1, 4, 4, 5, 6, 4,0 , 1, 4, 4, 5, 6, 4, 0,      //10 חנוכיה לי יש 
-                            4, 13, 6, 13, 8, 6,0 , 4, 5, 4, 5, 6, 4,0 , 4, 13, 6, 13, 8, 6,0 , 4, 5, 4, 5, 6, 4,
-                            0xff};
-uint8_t HappyBday_song[]={ 3 ,3 ,3 ,3 ,2 ,1 ,4 ,4 ,4 ,4 ,3 ,2 ,5 ,    // היום יום הולדת 11
-                       5 ,6 ,5 ,4 ,3 ,2 ,3 ,4 ,5,0 , 1,
-                       3 ,3 ,3 ,3 ,2 ,1 ,4 ,4 ,4 ,4 ,3 ,2 ,5 ,
-                       5 ,6 ,5 ,4 ,3 ,2 ,3 ,2 ,1,
-                       0xff };
-uint8_t AcheerfullBand_song[]={ 2,3 ,0 ,7 ,5 ,0 ,11 ,3 ,2 ,3 ,3 ,6 ,5,11 ,3 ,11 ,  // מקהלה עליזה 12
-                            5 ,11 ,3 ,11 ,11 ,3 ,2 ,20 ,1 ,0 , 1 ,1 ,2 ,3 ,
-                            11 ,5 ,6 ,7,0 ,8 , 0,7 ,6 ,5 ,11 ,5 ,
-                            0xff};
-uint8_t MordecaiWentBeforTheKing_song[]={3 ,3 ,4 ,5 ,6 ,4,0 ,2 ,2 ,3 ,4 ,5 ,3 ,0 ,    // מרדכי יצא מלפני המלך 13
-                                     1 ,1 ,2 ,3 ,4 ,2 ,0 ,1 ,20 ,1 ,20 ,19 ,3 ,
-                                     3 ,3 ,4 ,5 ,6 ,4,0 ,2 ,2 ,3 ,4 ,5 ,3 ,0 ,
-                                     1 ,1 ,2 ,3 ,4 ,2 ,0 ,1 ,20 ,1 ,20 ,19 ,19, 
-                                     0xff};
-uint8_t MostBeutifulGirl_song[]={3 ,3 ,2 ,2 ,3 ,3 ,2 ,2 ,2 ,0 , 2 ,2 ,2 ,1 ,1 ,1 ,2 ,   // הילדה הכי יפה בגן 14
-                             2 ,1 ,1 ,1 ,0 , 1 ,1 ,20 ,20 ,1 ,1 ,20 ,20 ,19 ,0 ,19 ,
-                             19 ,18 ,19 ,18 ,20 ,18 ,19 ,0 ,3 ,3 ,3 ,2 ,2 ,3 ,3 ,3 ,
-                             2,0 ,1 ,6 ,6 ,5 ,6 ,6 ,5 ,5,0 ,3 ,5 ,5 ,5 ,4 ,2 ,3 ,3 ,2 ,
-                             3 ,2 , 1, 1,
-                             0xff};
-uint8_t ILoveChocolate_song[]={1 ,3 ,3 ,3 ,2 ,1 ,2 ,3 ,0 , 3,3 ,3 ,2 ,1 ,0 , 1 ,3 ,3 ,3 ,2 ,    // אני אוהב שוקולד 15
-                           1 ,2 ,3 , 0, 4 ,4 ,3 ,2 , 0 ,1 ,3 ,3 ,3 ,2 ,1 ,2 ,3 , 0, 3,3 ,3 ,
-                           3 ,2 ,1 ,2 ,1 ,1 , 0, 1,3,3,3,3, 2,1 ,2 ,1 ,2 ,3 , 0 , 4 ,4 ,4 ,3 ,3 ,2 ,2 ,
-                           0xff};
-uint8_t HammerAndNail_song[]={1 ,4 ,1 ,4 ,6 ,8 ,13 ,5 , 0, 8 ,6 ,8 ,4 , 0, 6 ,5 ,4 ,3 ,4 ,5 ,   // פטיש מסמר 16
-                          1 ,4 ,1 ,4 ,6 ,8 ,13 ,5 , 0,8 ,6 ,4 ,5 ,4 ,3 ,4 ,4 ,
-                          0xff};
-uint8_t AlotOfHappiness_song[]={1 ,4 ,4 ,5 ,3 ,4 ,3 ,2 ,1 ,1 ,2 ,2 ,3 ,1 ,4 ,6 ,5 ,   //  17 שמחה רבה אביב הגיע פסח בא
-                            1 ,4 ,4 ,5 ,3 ,4 ,3 ,2 ,1 ,1 ,2 ,2 ,3 ,1,4 ,4 ,4 ,0 ,
-                            4 ,5 ,6 ,4 ,5 ,6 ,4 ,5 ,6 ,6 ,5 ,5 ,6, 4 ,4, 
-                            0xff};
-*/
+// יונתן הקטן 1   
+uint8_t littleJonathan_Song[] = {
+    0x87,0x4a,0x16,0xfd,0x7f,0xa8,0x64,0x7e,0x87
+    };                          
+// 2 אמא יקרה לי
+uint8_t motherDearest_Song[] = {
+    0x2a, 0x45, 0x7d, 0xae, 0x4a, 0x51, 0x9f, 0x9b, 0x99, 0xfd, 0xbf, 0x6d, 0x05, 0x64, 0x51, 0x16, 0x85
+    };
+// 3 איך שיר נולד
+uint8_t HowAsongWasBorn_song[] ={   
+    0x4, 0xf0, 0x6d, 0x7e, 0x7f, 0x2, 0x78, 0x5f, 0x9a, 0xdf, 0x13, 0xc0, 0xb7, 0xf9, 0xfd, 0xff, 0x7c, 0xc6, 0x21
+    };
+ //4 גן סגור 
+uint8_t ClosedKinderGarden_song[] ={
+    0x81, 0x0, 0x4b, 0x44, 0x44, 0xc4, 0x6, 0x2, 0x0, 0x11, 0x11, 0x11, 0xb, 0x2c, 0x10, 0x5, 0x8e, 0xc3, 0x18, 0x2
+    };
+//5 יידים למעלה                        
+uint8_t handsUp_song[]={ 
+    0x1c, 0x4e, 0x9c, 0xf3, 0x5b, 0x35, 0xff, 0x17, 0x39, 0x4
+    };
+//6 אני נשאר אני 
+uint8_t ImStayingMe_song[]= {
+    0xd2, 0x1f, 0x45, 0x2c, 0x12, 0x3, 0x5a, 0xe9, 0x8f, 0x58, 0x24, 0x6, 0xb4, 0x52, 0xce, 0x99, 0x97, 0xe2, 0x9c, 
+    0x2b, 0x65, 0xfe, 0x91, 0x72, 0x7e, 0xf7, 0x99, 0x63, 0x29, 0xce, 0x99, 0x43
+    };
+// 7 נר לי דקיק 
+uint8_t Mycandle_song[]= {
+    0xf4, 0x79, 0x8a, 0xca, 0xd2, 0xe7, 0x29, 0xf2, 0x92, 0x39, 0x8e, 0x73, 0xce, 0xfd, 0xf3, 0x14, 0x39, 0x4
+};
+// 8 זקן ארוך לי עד ברכיים
+uint8_t Longbeard_song[]={
+    0x2e, 0xb2, 0xa8, 0xd7, 0x45, 0x16, 0xf5, 0xba, 0x7d, 0x9f, 0x71, 0xf6, 0x7f, 0xbe, 0x71, 0x1c, 0x2
+};
+//9 אצא לי השוקה
+uint8_t GoingTotheShoka_song[]= {
+    0xee, 0x5b, 0xd6, 0x6, 0x15, 0x79, 0x3d, 0x9a, 0x9c, 0x73, 0xe6, 0x78, 0xe3, 0x9c, 0x27, 0x67, 0x3e, 0x4
+};
+//10 חנוכיה לי יש 
+uint8_t IHaveHunokka_song[] = {
+    0x6e, 0x9f, 0x5d, 0xb7, 0xcf, 0x6e, 0x83, 0x33, 0x38, 0xce, 0xed, 0xfb, 0xec, 0x36, 0x38, 0x83, 0xe3, 0xdc, 
+    0xbe, 0xcf, 0x86
+};
+// היום יום הולדת 11
+uint8_t HappyBday_song[]={
+    0x0, 0x72, 0xdb, 0xa2, 0x3f, 0x5f, 0x44, 0xbf, 0x6, 0x90, 0xdb, 0x16, 0xfd, 0xf9, 0x22, 0xe4, 0x10
+};
+// מקהלה עליזה 12
+uint8_t AcheerfullBand_song[]={
+    0x62, 0xf3, 0x37, 0x42, 0x90, 0x8f, 0x88, 0x1e, 0x11, 0x45, 0x68, 0xf0, 0xda, 0x22, 0x7a, 0xe6, 0x8d, 0x37, 
+    0xe7, 0xa3, 0x87
+};
+// מרדכי יצא מלפני המלך 13
+uint8_t MordecaiWentBeforTheKing_song[]={
+    0xd0, 0x67, 0x57, 0xa2, 0x67, 0x6d, 0x51, 0xad, 0x7, 0xf, 0x23, 0xd0, 0x67, 0x57, 0xa2, 0x67, 0x6d, 0x51, 
+    0xad, 0x7, 0xf, 0xe3, 0x18, 0x2
+};
+// הילדה הכי יפה בגן 14
+uint8_t MostBeutifulGirl_song[]={
+    0x20, 0x81, 0xa4, 0x95, 0x64, 0x5b, 0xb2, 0xbd, 0xf6, 0x30, 0xd8, 0xc3, 0x30, 0xee, 0x38, 0x6, 0x8d, 0x41, 
+    0x43, 0xd0, 0xb8, 0x80, 0x4, 0x68, 0x9d, 0xf9, 0xcc, 0x7f, 0xf9, 0x5f, 0x81, 0x90, 0x1d, 0x2
+};
+// אני אוהב שוקולד 15
+uint8_t ILoveChocolate_song[]={
+    0x6, 0x64, 0xb1, 0x80, 0xbc, 0x6, 0x64, 0xb1, 0x2d, 0x5a, 0x3, 0xb2, 0x58, 0x0, 0x59, 0xf6, 0x1a, 0x40, 0x96, 
+    0xc5, 0xb6, 0x5, 0x29, 0x4
+};
+ // פטיש מסמר 16
+uint8_t HammerAndNail_song[]={
+    0xae, 0x9b, 0x71, 0xf0, 0x37, 0xce, 0xb8, 0x9b, 0x2f, 0xbd, 0xeb, 0x66, 0x1c, 0xfc, 0x8d, 0xb3, 0x2f, 0x6d, 0x8
+};
+//  17 שמחה רבה אביב הגיע פסח בא
+uint8_t AlotOfHappiness_song[]={
+    0x6e, 0x4f, 0x91, 0x2d, 0xe1, 0xe6, 0xdd, 0x9e, 0x22, 0x5b, 0xc2, 0x6d, 0xb7, 0xcf, 0x3e, 0xfb, 0xcc, 0x3f, 0xdb, 
+    0x10
+};
+
 
 uint8_t* getSongArray(enum Available_Song song){
     switch (song)
@@ -114,7 +108,7 @@ uint8_t* getSongArray(enum Available_Song song){
         return motherDearest_Song;
     case HowAsongWasBorn:
         return HowAsongWasBorn_song;
-    /*case ClosedKinderGarden:
+    case ClosedKinderGarden:
         return ClosedKinderGarden_song;
     case handsUp:
         return handsUp_song;
@@ -132,7 +126,7 @@ uint8_t* getSongArray(enum Available_Song song){
         return HappyBday_song;
     case AcheerfullBand:
         return AcheerfullBand_song;
-    case MordecaiWentBeforTheKing:
+    /*case MordecaiWentBeforTheKing:
         return MordecaiWentBeforTheKing_song;
     case ILoveChocolate:
         return ILoveChocolate_song;

@@ -11,7 +11,7 @@
 #include "Musical_hc10_BLE_Blutooth.h"
 
 void musical_Program(){
-    //testBlutooth();
+    testBlutooth();
 
     bool changeModeToDefault = false;
     switch (getCurMode())

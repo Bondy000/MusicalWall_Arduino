@@ -1,28 +1,10 @@
  #ifndef HOFMAN_CODE_H 
  #define HOFMAN_CODE_H 
 
-/*
-    0 =     1101        0xd
-    1 =     011         0x3 
-    2 =     010         0x2
-    3 =     00          0x0
-    4 =     101         0x5
-    5 =     111         0x7
-    6 =     1001        0x9
-    7 =     11001       0x19
-    8 =     100011      0x23
-    9 =     10000001    0x81   
-    10 =    10000000    0x80
-    11 =    100010      0x22
-    12 =    NULL
-    13 =    10000011    0x83
-    14 =    NULL
-    15 =    NULL
-    16 =    NULL
-    17 =    NULL    
-    18 =    10000010    0x82
-    19 =    110001      0x31
-    20 =    110000      0x30
-    255 =   100001      0x21
-*/
+#include <stdint.h>
+#include <Arduino.h>
+
+uint8_t decipherHofman();
+void setDataPointer(uint8_t* data);
+uint8_t addMask(uint8_t currentValue);
  #endif

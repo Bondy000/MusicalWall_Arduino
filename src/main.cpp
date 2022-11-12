@@ -10,6 +10,8 @@
 //#include "Song_File.h"
 #include "Data_File.h"
 
+//#include "hofmanCode.h"
+
 void setup() {
   Serial.begin(SOFTWARE_SERIAL_SPEED);
 
@@ -48,6 +50,21 @@ void setup() {
   Serial.println("Setup complete");
 }
 
-void loop() {  
+void loop() { 
+
+ /*if(b){
+    int count = 0;
+    Serial.println("StartDecipher");
+    setDataPointer(h);
+    uint8_t x = 0;
+    do{
+      x = decipherHofman();
+      
+      Serial.println(x);
+      count++;
+    } while(x != 0xff);
+    Serial.println(count);
+    b = false;
+  }*/
   musical_Program();
 }
