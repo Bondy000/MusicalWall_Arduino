@@ -13,7 +13,7 @@
 #define BLUTOOTH
 
 //Define the instrument to play
-#define YOKILEYLEY_INS
+#define GUITAR_INS
 
 enum Available_Mode{No_Mode, StandAlone, StandAlone_Song, NumOfModes};
 enum Available_Instruments{Guitar_Ins, Piano_Ins, Saxophone_Ins, Xylophone_Ins, Drum_Ins, Yokileyley_Ins, NumOfInstruments};

@@ -7,12 +7,14 @@
     cThird = 0xdf,
     ble_Read = 0x00,
     ble_Write = 0x01,
-    noConnection = 0xff,
-    mode_up = 0x10,
-    song_up = 0x11,
-    inst_up = 0x12,
-    vol_up = 0x13,
-    err_up = 0x14
+    connectionBit = 0x80,
+    modeBit = 0x3f,
+    rwbit = 0x40,
+    err_up = 0x00,
+    mode_up = 0x01,
+    song_up = 0x02,
+    inst_up = 0x03,
+    vol_up = 0x04
  };
 
  #endif

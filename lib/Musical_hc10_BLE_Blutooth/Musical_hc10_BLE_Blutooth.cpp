@@ -8,8 +8,8 @@
 #include "Musical_Song_StandAlone/Musical_Song_StandAlone.h"
 #include "BLE_Code.h"
 
-uint8_t bleData[BLE_DATA_LENGTH] = {0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00};
-uint8_t dataToSend[BLE_SEND_LENGTH] = {0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00};
+char bleData[BLE_READ_LENGTH] = {0};
+char dataToSend[BLE_SEND_LENGTH] = {0};
 
 SoftwareSerial hc10_Blutooth(BLUTOOTH_TX_TO_ARDUINO_RX_PIN, BLUTOOTH_RX_TO_ARDUINO__TX_PIN);
 
@@ -20,7 +20,6 @@ bool blutooth_Setup(){
 }
 
 bool bl_write(){
-    //int sent = hc10_Blutooth.write(input.c_str());
     if(hc10_Blutooth.write(dataToSend, BLE_SEND_LENGTH)){
         return true;
     }
@@ -40,27 +39,50 @@ bool read_BleData(){
     }
     delay(500);
     
-    for (uint8_t i = 0; i < 8; i++)
+    for (uint8_t i = 0; i < BLE_READ_LENGTH; i++)
     {
         Serial.println((char)(bleData[i]));
     }
     
+    if(!checkConnection()){
+        return false;
+    }
+    if(!checkWallCode()){
+        return false;
+    }
 
-    if(bleData[3] == noConnection){
-        return false;
+    if(deviceRead()){
+        return sendData(getBLEmode(), getBLEdataValue());
     }
-    if(bleData[0] != cFirst || bleData[1] != cSecond || bleData[2] != cThird){
-        return false;
-    }
-    
-    uint8_t value = (bleData[6] << 4) | bleData[7];
-    
-    if(bleData[4] == ble_Read){
-        return sendData(bleData[5], value);
-    }else if(bleData[4] == ble_Write){
-        return readData(bleData[5], value);
+    else{ //deviceWrite
+        return readData(getBLEmode(), getBLEdataValue());
     }
     return false;
+}
+
+bool checkConnection(){
+    if(bleData[3] & connectionBit){
+        return true;
+    }
+    return false;
+}
+bool checkWallCode(){
+    if(bleData[0] == cFirst && bleData[1] == cSecond && bleData[2] == cThird){
+        return true;
+    }
+    return false;
+}
+bool deviceRead(){
+    if(bleData[3] & rwbit){
+        return true;
+    }
+    return false;
+}
+uint8_t getBLEmode(){
+    return bleData[3] & modeBit;
+}
+uint8_t getBLEdataValue(){
+    return bleData[4];
 }
 
 bool readData(uint8_t mode, uint8_t value){
@@ -84,66 +106,63 @@ bool readData(uint8_t mode, uint8_t value){
 }
 
 bool sendData(uint8_t mode, uint8_t value){
-    if(hc10_Blutooth.available()){
-        if(!hc10_Blutooth.readBytes(bleData, BLE_DATA_LENGTH)){
-            return false;
-        } 
-    }
-
+    String output = "";
     switch (mode)
     {
     case mode_up:
     {
         if(value >= NumOfModes || value < 0){
             return false;
-        }else if(value == 0){
-            String output = getModeName(getCurMode());
-            setDataToSend(output.c_str(), output.length());
-            return bl_write();
         }
-        else{
-            String output = getModeName(static_cast<Available_Mode>((int)value));
-            setDataToSend(output.c_str(), output.length());
-            return bl_write();
-        }
-    }
-    case song_up:
-    {
         if(value == 0){
-            String output = getSongName(getCurSong());
-            setDataToSend(output.c_str(), output.length());
-            return bl_write();
+            output = getModeName(getCurMode());
         }
         else{
-            String output = getSongName(static_cast<Available_Song>((int)value));
-            setDataToSend(output.c_str(), output.length());
-            return bl_write();
+            output = getModeName(static_cast<Available_Mode>((int)value - 1));
         }
-    }
-    case inst_up:
-    {
-        String output = getName();
         setDataToSend(output.c_str(), output.length());
         return bl_write();
     }
-    /*case vol_up:
+    case song_up:
+    {
+        if(value >= NumOfSongs || value < 0){
+            return false;
+        }
+        if(value == 0){
+            output = getSongName(getCurSong());
+        }
+        else{
+            output = getSongName(static_cast<Available_Song>((int)value));  
+        }
+        setDataToSend(output.c_str(), output.length());
+        return bl_write();
+    }
+    case inst_up:
+    {
+        output = getName();
+    }
+    /*
+    case vol_up:
 
         break;
     case err_up:
 
-        break;*/
+        break;
+    */
     
     default:
         return false;
         break;
     }
+    
     delay(1000);
-    return true;
+    setDataToSend(output.c_str(), output.length());
+    return bl_write();
 }
 
 bool ble_read(){
     if(hc10_Blutooth.available()){
-        if(hc10_Blutooth.readBytes(bleData, BLE_DATA_LENGTH)){
+        if(hc10_Blutooth.readBytes(bleData, BLE_READ_LENGTH)){
             return true;
         } 
     }
@@ -166,76 +185,4 @@ void resetSendData(){
     {
         dataToSend[i] = 0x00;
     }
-    
 }
-/*
-bool writeData_try(String data){
-    if(data.length() > 8)
-        return false;
-    bl_write(data);
-    delay(1000);
-    return true;
-}*/
-
-/*String bl_read(){
-    String output = "null";
-    if(hc10_Blutooth.available()){
-        output = hc10_Blutooth.readString();
-    }
-    return output;
-}*/
-
-
-/*String readData(){
-    //return ble_read();
-    return "nul";
-    String r = bl_read();
-    if(!isDataNull(r)){
-        if(r.compareTo(master_WantWrite) == 0){
-            bl_write(slave_CanRead);
-            delay(500);
-            Serial.println("Reading now... Waiting for input...");
-            
-            bool reading = true;
-            while(reading){
-                r = bl_read();
-                if(!isDataNull(r)){
-                    bl_write(slave_GotData);
-                    delay(500);
-                    Serial.println("End reading...");
-                    return r;
-                }
-            }
-        }
-    }
-    return "null";
-}*/
-
-/*bool writeData(String data){
-    bl_write(slave_WantWrite);
-    delay(1000);
-    String input = bl_read();
-    if(!isDataNull(input)){
-        if(input.compareTo(master_CanRead) == 0){
-            Serial.println("Writing Data...");
-            slaveMasterValidation(data);
-            Serial.println("Finished Writing...");
-            return true;
-        }
-    }
-    return false;
-}*/
-
-/*bool isDataNull(String data){
-    if((data.compareTo("null") != 0) && (data.compareTo("ERROR") != 0)){
-        return false;
-    }
-    return true;
-} 
-
-void slaveMasterValidation(String data){
-    while(bl_read().compareTo(master_GotData) != 0){
-        bl_write(data);
-        delay(1000);
-    }
-}*/

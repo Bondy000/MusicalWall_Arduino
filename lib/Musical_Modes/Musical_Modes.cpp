@@ -11,7 +11,7 @@
 #include "Musical_hc10_BLE_Blutooth.h"
 
 void musical_Program(){
-    testBlutooth();
+    //testBlutooth();
 
     bool changeModeToDefault = false;
     switch (getCurMode())
@@ -30,15 +30,16 @@ void musical_Program(){
     
     if(changeModeToDefault){
         changeMode(defaultMode);
+        saS_resetSong();
     }
 }
 
 bool mode_ChangeMode(Available_Mode newMode){
-    if(newMode < 0 || newMode >= NumOfModes){
+    if(newMode < 0 || newMode > NumOfModes){
         Serial.println("Mode does not exist...");
         return false;
     }
-    if(getCurMode() == newMode){
+    if(newMode == NumOfModes || getCurMode() == newMode){
         Serial.println("Already in the mode!");
         return false;
     }

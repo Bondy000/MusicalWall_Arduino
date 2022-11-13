@@ -60,7 +60,7 @@ bool mp3_PlayInstrumentNote(uint8_t playInst, uint8_t note){
 
 bool mp3_PlaySong(uint8_t song){
     Serial.print("Playing song ");
-    Serial.print(song);
+    Serial.println(song);
 
     myDFPlayer.playFolder(0, song);
     return true;
